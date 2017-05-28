@@ -1,0 +1,29 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="Base.Theme.AmalanHarianAppp" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!--   warna gelap untuk status bar dan contextual app bars -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!--   theme UI controls seperti checkboxes dan text fields e.g. FloatActionButton -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--   warna untuk Title Text  -->
+        <item name="android:textColorPrimary">@color/primaryText</item>
+        <!--   warna untuk menu overflow icon (tiga titik vertical) -->
+        <item name="android:textColorSecondary">@color/secondaryText</item>
+
+
+    </style>
+
+    <style name="AppBaseTheme" parent="Base.Theme.AmalanHarianAppp" />
+
+    <style name="AppTheme" parent="AppBaseTheme" />
+
+    <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

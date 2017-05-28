@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Jenis Amalan" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:id="@+id/jenisAlaman"></Spinner>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Nama Amalan" />
+        <EditText
+            android:textSize="16dp"
+            android:gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/namaAmalan"
+            android:hint="25 karakter"
+            android:layout_marginBottom="8dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Waktu Amalan"/>
+        <EditText
+            android:textSize="16dp"
+            android:gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/jamAmalan"
+            android:hint="hh:mm"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alarm" />
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:rowCount="2">
+            <CheckBox android:layout_row="0"
+                android:layout_column="0"
+                android:layout_width="match_parent"
+                android:text="Senin"
+                android:id="@+id/senin"
+                android:tag="1" />
+            <CheckBox android:layout_row="0"
+                android:layout_column="1"
+                android:text="Selasa"
+                android:id="@+id/selasa"
+                android:tag="2"/>
+            <CheckBox android:layout_row="0"
+                android:layout_column="2"
+                android:layout_width="wrap_content"
+                android:text="Rabu"
+                android:id="@+id/rabu"
+                android:tag="3"/>
+            <CheckBox android:layout_row="0"
+                android:layout_column="3"
+                android:layout_width="wrap_content"
+                android:text="Kamis"
+                android:id="@+id/kamis"
+                android:tag="4"/>
+            <CheckBox android:layout_row="1"
+                android:layout_column="0"
+                android:layout_width="wrap_content"
+                android:text="Jumat"
+                android:id="@+id/jumat"
+                android:tag="5"/>
+            <CheckBox android:layout_row="1"
+                android:layout_column="1"
+                android:layout_width="wrap_content"
+                android:text="Sabtu"
+                android:id="@+id/sabtu"
+                android:tag="6"/>
+            <CheckBox android:layout_row="1"
+                android:layout_column="2"
+                android:layout_width="wrap_content"
+                android:text="Ahad"
+                android:id="@+id/ahad"
+                android:tag="7"/>
+        </GridLayout>
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Aktifkan Alarm"
+                android:layout_weight="1"
+                />
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/on_off_amalan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="4"/>
+        <Button android:id="@+id/btnBatal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Batal"
+            android:background="@color/transparent"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="4dp"/>
+        <Button android:id="@+id/btnSimpan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Simpan"
+            android:background="@color/transparent"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="4dp"/>
+    </LinearLayout>
+
+</LinearLayout>
