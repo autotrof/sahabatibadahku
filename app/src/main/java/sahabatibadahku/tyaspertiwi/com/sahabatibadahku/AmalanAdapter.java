@@ -36,11 +36,11 @@ public class AmalanAdapter extends RecyclerView.Adapter<AmalanAdapter.TheHolder>
     private Context context;
     private DaoAmalan daoAmalan;
     private int tempId;
-    private MainFragment mainFragment;
+    private View view;
 
-    public AmalanAdapter(Context context, MainFragment mainFragment, List<Amalan> listAmalan) {
+    public AmalanAdapter(Context context, View view, List<Amalan> listAmalan) {
         this.context = context;
-        this.mainFragment = mainFragment;
+        this.view = view;
         daoAmalan = new DaoAmalan(context);
         this.listAmalan = listAmalan;
     }
@@ -77,7 +77,7 @@ public class AmalanAdapter extends RecyclerView.Adapter<AmalanAdapter.TheHolder>
                 notifyDataSetChanged();
                 break;
             case R.id.menu_atur:
-                DialogInputAmalan dialogInputAmalan = new DialogInputAmalan(context, mainFragment, daoAmalan.getOne(tempId));
+                DialogInputAmalan dialogInputAmalan = new DialogInputAmalan(context, view, daoAmalan.getOne(tempId));
                 dialogInputAmalan.setTitle("Tambah Amalan");
                 dialogInputAmalan.show();
                 dialogInputAmalan.getWindow().setLayout(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT);
@@ -160,9 +160,21 @@ public class AmalanAdapter extends RecyclerView.Adapter<AmalanAdapter.TheHolder>
                 .setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         daoAmalan.delete(id);
-                        Log.d("AMALANADAPTER", String.valueOf(id));
                         dialog.dismiss();
                         listAmalan = daoAmalan.getAll();
+
+                        TextView placeholder_recycler_view_amalan = (TextView)view.findViewById(R.id.placeholder_recycler_view_amalan);
+                        RecyclerView recycler_view_amalan = (RecyclerView)view.findViewById(R.id.recycler_view_amalan);
+
+                        if (listAmalan.size()<1) {
+                            recycler_view_amalan.setVisibility(View.GONE);
+                            placeholder_recycler_view_amalan.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            placeholder_recycler_view_amalan.setVisibility(View.GONE);
+                            recycler_view_amalan.setVisibility(View.VISIBLE);
+                        }
+                        recycler_view_amalan.setAdapter(AmalanAdapter.this);
                         notifyDataSetChanged();
                     }
                 })

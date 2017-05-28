@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  * Created by Agung on 5/27/2017.
  */
@@ -16,7 +20,7 @@ public class Database extends SQLiteOpenHelper {
     AssetManager assetManager;
     private static final String TAG = "DATABASE INIT";
     public static final String db_nama = "Database";
-    public static final Integer db_versi = 2;
+    public static final Integer db_versi = 3;
 
     public static final String table_amalan = "amalan";
     public static final String amalan_id = "amalan_id";
@@ -71,6 +75,30 @@ public class Database extends SQLiteOpenHelper {
                 "" + jenis_nama + " TEXT, " +
                 "" + amalan_jenis_id + " INTEGER);"
         );
+
+        db.execSQL("CREATE TABLE " + tabel_kota + "(" +
+                "" + kota_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "" + kota_nama + " TEXT, " +
+                "" + kota_negara + " INTEGER);"
+        );
+
+        try {
+            InputStreamReader is = new InputStreamReader(assetManager.open("city-list.csv"));
+
+            BufferedReader reader = new BufferedReader(is);
+            reader.readLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] city = line.split(";");
+                ContentValues values = new ContentValues();
+                values.put(kota_id, city[0]);
+                values.put(kota_nama, city[1]);
+                values.put(kota_negara, city[1]);
+                db.insert(tabel_kota,null,values);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         //DEFINISI JENIS AMALAN

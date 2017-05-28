@@ -45,7 +45,6 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        amalanAdapter = new AmalanAdapter(getActivity(),this,listAmalan);
         if(view==null){
             view = inflater.inflate(R.layout.fragment_main,container,false);
         }else{
@@ -70,6 +69,7 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
             placeholder_recycler_view_amalan.setVisibility(View.GONE);
         }
         recycler_view_amalan.setAdapter(amalanAdapter);
+        amalanAdapter = new AmalanAdapter(getActivity(),view,listAmalan);
         return view;
     }
 
@@ -96,7 +96,7 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
     }
 
     public void showDialogInputAmalan(){
-        DialogInputAmalan dialogInputAmalan = new DialogInputAmalan(getActivity(),this);
+        DialogInputAmalan dialogInputAmalan = new DialogInputAmalan(getActivity(),view);
         dialogInputAmalan.setTitle("Tambah Amalan");
         dialogInputAmalan.show();
         dialogInputAmalan.getWindow().setLayout(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT);
@@ -114,7 +114,7 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
             placeholder_recycler_view_amalan.setVisibility(View.GONE);
             recycler_view_amalan.setVisibility(View.VISIBLE);
         }
-        AmalanAdapter adapter = new AmalanAdapter(getActivity(),this,list);
+        AmalanAdapter adapter = new AmalanAdapter(getActivity(),view,list);
         recycler_view_amalan.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

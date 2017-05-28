@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
 import android.text.InputType;
 import android.view.View;
@@ -23,7 +22,6 @@ import java.util.List;
 
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.dao.DaoAmalan;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.dao.DaoJenisAmalan;
-import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.fragments.MainFragment;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.models.Amalan;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.models.JenisAmalan;
 
@@ -45,11 +43,11 @@ public class DialogInputAmalan extends Dialog implements View.OnClickListener, V
     DaoAmalan daoAmalan;
     List<JenisAmalan> listJenisAmalan;
     List<String> stringListJenisAmalan;
-    MainFragment activeFragment;
+    View view;
 
-    public DialogInputAmalan(Context context, MainFragment activeFragment) {
+    public DialogInputAmalan(Context context, View view) {
         super(context);
-        this.activeFragment = activeFragment;
+        this.view = view;
         this.context = context;
         daoJenisAmalan = new DaoJenisAmalan(context);
         daoAmalan = new DaoAmalan(context);
@@ -60,9 +58,9 @@ public class DialogInputAmalan extends Dialog implements View.OnClickListener, V
         }
     }
 
-    public DialogInputAmalan(Context context, MainFragment activeFragment, Amalan amalan) {
+    public DialogInputAmalan(Context context, View view, Amalan amalan) {
         super(context);
-        this.activeFragment = activeFragment;
+        this.view = view;
         this.context = context;
         this.amalan = amalan;
         daoJenisAmalan = new DaoJenisAmalan(context);
@@ -102,8 +100,11 @@ public class DialogInputAmalan extends Dialog implements View.OnClickListener, V
         on_off_amalan = (SwitchCompat)findViewById(R.id.on_off_amalan);
 
         if(amalan!=null){
+            jenisAmalan.setSelection(amalan.getJenisAmalan().getId(),false);
             namaAmalan.setText(amalan.getNama());
             jamAmalan.setText(amalan.getJam());
+            if(amalan.getOnOff().equals("1")) on_off_amalan.setChecked(true);
+            else on_off_amalan.setChecked(false);
             String[] hari = amalan.getHari().split("");
             for (String h:hari){
                 switch (h){
@@ -132,6 +133,8 @@ public class DialogInputAmalan extends Dialog implements View.OnClickListener, V
             }
         }
     }
+
+
 
     @Override
     public void onClick(View v) {
