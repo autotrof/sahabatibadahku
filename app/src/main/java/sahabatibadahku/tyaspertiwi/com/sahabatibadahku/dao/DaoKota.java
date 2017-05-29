@@ -31,6 +31,7 @@ public class DaoKota {
                 int id = Integer.parseInt(cursor.getString(0));
                 String nama = cursor.getString(1);
                 int negara = cursor.getInt(2);
+                listKota.add(new Kota(id,nama,negara));
             }while (cursor.moveToNext());
         }
         return listKota;

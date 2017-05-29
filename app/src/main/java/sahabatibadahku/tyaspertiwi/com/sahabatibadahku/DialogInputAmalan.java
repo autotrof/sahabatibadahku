@@ -218,10 +218,18 @@ public class DialogInputAmalan extends Dialog implements View.OnClickListener, V
     public void onFocusChange(View v, boolean b) {
         switch (v.getId()){
             case R.id.jamAmalan:
+                EditText inputJam = (EditText)v;
                 if(b){
                     Calendar mcurrentTime = Calendar.getInstance();
-                    int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                    int minute = mcurrentTime.get(Calendar.MINUTE);
+                    int hour, minute;
+                    if(inputJam.getText().toString().equals("")){
+                        hour = 0;
+                        minute = 0;
+                    }else {
+                        String[] stringWaktu = inputJam.getText().toString().split(":");
+                        hour = Integer.parseInt(stringWaktu[0]);
+                        minute = Integer.parseInt(stringWaktu[1]);
+                    }
 
                     TimePickerDialog mTimePicker;
                     mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
@@ -235,7 +243,7 @@ public class DialogInputAmalan extends Dialog implements View.OnClickListener, V
                             jamAmalan.setText( stringSelectedHour + ":" + stringSelectedMinute);
                         }
                     }, hour, minute, true);
-                    mTimePicker.setTitle("Select Time");
+                    mTimePicker.setTitle("Tentukan Waktu Pengingat");
                     mTimePicker.show();
                 }
                 break;

@@ -41,9 +41,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        daoAmalan = new DaoAmalan(this);
-        listAmalan = daoAmalan.getAll();
-
         coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinatorLayout);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(0xFFFFFFFF);
@@ -53,24 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        for(int i=0;i<12;i++){
-//            Amalan amalan = new Amalan();
-//            amalan.setNama("Amalan "+i);
-//            amalan.setJam("10:0"+i);
-//            listAmalan.add(amalan);
-//        }
-        fragmentTransaction.add(R.id.fragment,new MainFragment(listAmalan));
+        fragmentTransaction.add(R.id.fragment,new MainFragment());
         fragmentTransaction.commit();
 
         viewState = 1;
-
-        db = new Database(this).getReadableDatabase();
-        daoAmalan = new DaoAmalan(this);
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-//        return true;
-//    }
 }

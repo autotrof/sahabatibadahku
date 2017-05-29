@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent">
+    <TextView android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ini jadwal adzan"/>
+        android:textStyle="bold"
+        android:text="Jadwal Adzan"
+        android:background="@color/cardview_light_background"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cardview_light_background"
+        android:padding="8dp">
+        <TextView android:textSize="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 Ramadhan 1438 H"
+            android:textColor="@color/primaryText"
+            android:id="@+id/text_tanggal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"/>
+        <TextView android:textSize="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/primaryText"
+            android:text="Kota Surabaya"
+            android:id="@+id/text_kota" />
+    </RelativeLayout>
+
+    <ListView android:background="@color/cardview_light_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list_kota"></ListView>
 </LinearLayout>

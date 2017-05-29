@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Waktu Adzan"
+        android:id="@+id/menu_waktu_adzan"
+        app:showAsAction="always"
+        android:icon="@drawable/timetable" />
+
+    <item android:title="Rekap"
+        android:id="@+id/menu_rekap"
+        app:showAsAction="always"
+        android:icon="@drawable/chart_histogram"/>
+
+    <item android:title="Tambah Amalan"
+        android:id="@+id/menu_home"
+        app:showAsAction="always"
+        android:icon="@drawable/home_outline"/>
+</menu>

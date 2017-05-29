@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +16,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.AmalanAdapter;
@@ -30,17 +30,15 @@ import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.models.Amalan;
  * Created by Agung on 5/27/2017.
  */
 
-public class MainFragment extends Fragment implements Dialog.OnCancelListener, Dialog.OnDismissListener{
+public class MainFragment extends Fragment implements Dialog.OnCancelListener, Dialog.OnDismissListener, View.OnClickListener {
 
     private View view;
     private RecyclerView recycler_view_amalan;
-    private AmalanAdapter amalanAdapter;
-    private List<Amalan> listAmalan;
     private TextView placeholder_recycler_view_amalan;
     private DaoAmalan daoAmalan;
+    FragmentManager fragmentManager;
 
-    public MainFragment(List<Amalan> listAmalan) {
-        this.listAmalan = listAmalan;
+    public MainFragment() {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,33 +54,20 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recycler_view_amalan.setLayoutManager(layoutManager);
         recycler_view_amalan.setItemAnimator(new DefaultItemAnimator());
-        if (listAmalan.size()<1) {
-            recycler_view_amalan.setVisibility(View.GONE);
-            placeholder_recycler_view_amalan.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showDialogInputAmalan();
-                }
-            });
-        }
-        else {
-            placeholder_recycler_view_amalan.setVisibility(View.GONE);
-        }
-        recycler_view_amalan.setAdapter(amalanAdapter);
-        amalanAdapter = new AmalanAdapter(getActivity(),view,listAmalan);
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        amalanAdapter.notifyDataSetChanged();
         daoAmalan = new DaoAmalan(getActivity());
+        loadAllAmalan();
+        fragmentManager = getActivity().getSupportFragmentManager();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        getActivity().getMenuInflater().inflate(R.menu.toolbar_main_menu, menu);
     }
 
     @Override
@@ -90,6 +75,11 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
         switch (item.getItemId()) {
             case R.id.menu_tambah:
                 showDialogInputAmalan();
+                break;
+            case R.id.menu_waktu_adzan:
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment,new JadwalAdzanFragment());
+                fragmentTransaction.commit();
                 break;
         }
         return true;
@@ -109,6 +99,7 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
         if (list.size()<1) {
             recycler_view_amalan.setVisibility(View.GONE);
             placeholder_recycler_view_amalan.setVisibility(View.VISIBLE);
+            placeholder_recycler_view_amalan.setOnClickListener(this);
         }
         else {
             placeholder_recycler_view_amalan.setVisibility(View.GONE);
@@ -127,5 +118,14 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
     @Override
     public void onDismiss(DialogInterface dialogInterface) {
         loadAllAmalan();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.placeholder_recycler_view_amalan:
+                showDialogInputAmalan();
+                break;
+        }
     }
 }

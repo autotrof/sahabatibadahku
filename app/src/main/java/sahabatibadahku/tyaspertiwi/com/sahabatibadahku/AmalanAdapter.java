@@ -9,21 +9,17 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
 
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.dao.DaoAmalan;
-import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.fragments.MainFragment;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.models.Amalan;
 
 /**
@@ -37,6 +33,7 @@ public class AmalanAdapter extends RecyclerView.Adapter<AmalanAdapter.TheHolder>
     private DaoAmalan daoAmalan;
     private int tempId;
     private View view;
+    private static final int UPDATE_CODE = 1, INSERT_CODE = 2;
 
     public AmalanAdapter(Context context, View view, List<Amalan> listAmalan) {
         this.context = context;
@@ -62,6 +59,9 @@ public class AmalanAdapter extends RecyclerView.Adapter<AmalanAdapter.TheHolder>
                 popupMenu.setOnMenuItemClickListener(this);
                 popupMenu.show();
                 break;
+            case R.id.placeholder_recycler_view_amalan:
+                showDialogInputAmalan(INSERT_CODE);
+                break;
         }
     }
 
@@ -77,12 +77,7 @@ public class AmalanAdapter extends RecyclerView.Adapter<AmalanAdapter.TheHolder>
                 notifyDataSetChanged();
                 break;
             case R.id.menu_atur:
-                DialogInputAmalan dialogInputAmalan = new DialogInputAmalan(context, view, daoAmalan.getOne(tempId));
-                dialogInputAmalan.setTitle("Tambah Amalan");
-                dialogInputAmalan.show();
-                dialogInputAmalan.getWindow().setLayout(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT);
-                dialogInputAmalan.setOnCancelListener(this);
-                dialogInputAmalan.setOnDismissListener(this);
+                showDialogInputAmalan(UPDATE_CODE);
                 break;
             case R.id.menu_hapus:
                 AlertDialog dialog = AskOption(tempId);
@@ -169,6 +164,7 @@ public class AmalanAdapter extends RecyclerView.Adapter<AmalanAdapter.TheHolder>
                         if (listAmalan.size()<1) {
                             recycler_view_amalan.setVisibility(View.GONE);
                             placeholder_recycler_view_amalan.setVisibility(View.VISIBLE);
+                            placeholder_recycler_view_amalan.setOnClickListener(AmalanAdapter.this);
                         }
                         else {
                             placeholder_recycler_view_amalan.setVisibility(View.GONE);
@@ -185,5 +181,16 @@ public class AmalanAdapter extends RecyclerView.Adapter<AmalanAdapter.TheHolder>
                 })
                 .create();
         return myQuittingDialogBox;
+    }
+
+    private void showDialogInputAmalan(int processCode){
+        DialogInputAmalan dialogInputAmalan;
+        if(processCode==UPDATE_CODE) dialogInputAmalan = new DialogInputAmalan(context, view, daoAmalan.getOne(tempId));
+        else dialogInputAmalan = new DialogInputAmalan(context, view);
+        dialogInputAmalan.setTitle("Tambah Amalan");
+        dialogInputAmalan.show();
+        dialogInputAmalan.getWindow().setLayout(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT);
+        dialogInputAmalan.setOnCancelListener(this);
+        dialogInputAmalan.setOnDismissListener(this);
     }
 }
