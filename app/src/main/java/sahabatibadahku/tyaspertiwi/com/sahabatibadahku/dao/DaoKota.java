@@ -22,7 +22,7 @@ public class DaoKota {
     }
 
     public ArrayList<Kota> getAll(){
-        String query = "SELECT * FROM " +Database.tabel_kota;
+        String query = "SELECT * FROM " +Database.table_kota;
 
         ArrayList<Kota> listKota = new ArrayList<>();
         Cursor cursor = DB.rawQuery(query, null);
@@ -35,5 +35,15 @@ public class DaoKota {
             }while (cursor.moveToNext());
         }
         return listKota;
+    }
+
+    public Kota getOne(int id) {
+        String query = "SELECT * FROM "+Database.table_kota+" WHERE "+Database.table_kota+"."+Database.kota_id+"=?";
+        Cursor cursor = DB.rawQuery(query, new String[]{String.valueOf(id)});
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Kota kota = new Kota(cursor);
+        return kota;
     }
 }

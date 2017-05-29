@@ -8,7 +8,7 @@
     <item android:title="Rekap"
         android:id="@+id/menu_rekap"
         app:showAsAction="always"
-        android:icon="@drawable/chart_histogram"/>
+        android:icon="@drawable/chart_line"/>
 
     <item android:title="Tambah Amalan"
         android:id="@+id/menu_tambah"

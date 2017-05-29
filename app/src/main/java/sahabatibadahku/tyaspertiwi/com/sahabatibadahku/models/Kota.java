@@ -1,5 +1,9 @@
 package sahabatibadahku.tyaspertiwi.com.sahabatibadahku.models;
 
+import android.database.Cursor;
+
+import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.Database;
+
 /**
  * Created by Agung on 5/29/2017.
  */
@@ -50,5 +54,11 @@ public class Kota {
 
     public Kota() {
 
+    }
+
+    public Kota(Cursor cursor) {
+        this.id = cursor.getInt(cursor.getColumnIndex(Database.kota_id));
+        this.nama = cursor.getString(cursor.getColumnIndex(Database.kota_nama));
+        this.negara_id = cursor.getInt(cursor.getColumnIndex(Database.kota_negara));
     }
 }

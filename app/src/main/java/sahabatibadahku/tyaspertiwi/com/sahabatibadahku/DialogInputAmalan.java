@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -78,8 +79,8 @@ public class DialogInputAmalan extends Dialog implements View.OnClickListener, V
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_input_amalan);
         jenisAmalan = (Spinner)findViewById(R.id.jenisAlaman);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, stringListJenisAmalan);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        BaseAdapter adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, stringListJenisAmalan);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         jenisAmalan.setAdapter(adapter);
         btnSimpan = (Button)findViewById(R.id.btnSimpan);
         btnSimpan.setOnClickListener(this);
