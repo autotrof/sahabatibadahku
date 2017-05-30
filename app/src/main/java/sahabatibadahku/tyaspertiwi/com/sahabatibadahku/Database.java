@@ -51,6 +51,7 @@ public class Database extends SQLiteOpenHelper {
 
     public static final String table_kota = "kota";
     public static final String kota_id = "kota_id";
+    public static final String kota_kode = "kota_kode";
     public static final String kota_nama = "kota_nama";
     public static final String kota_negara = "kota_negara";
 
@@ -91,6 +92,7 @@ public class Database extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE " + table_kota + "(" +
                 "" + kota_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "" + kota_kode + " TEXT, " +
                 "" + kota_nama + " TEXT, " +
                 "" + kota_negara + " INTEGER);"
         );
@@ -116,7 +118,7 @@ public class Database extends SQLiteOpenHelper {
             while ((line = reader.readLine()) != null) {
                 String[] city = line.split(";");
                 ContentValues values = new ContentValues();
-                values.put(kota_id, city[0]);
+                values.put(kota_kode, city[0]);
                 values.put(kota_nama, city[1]);
                 values.put(kota_negara, city[2]);
                 db.insert(table_kota,null,values);
@@ -163,21 +165,17 @@ public class Database extends SQLiteOpenHelper {
 
         //INSERT WAKTU SALAT
         try {
-            InputStreamReader is = new InputStreamReader(assetManager.open("prayer-time.csv"));
+            InputStreamReader is = new InputStreamReader(assetManager.open("prayer-time-2017.csv"));
 
             BufferedReader reader = new BufferedReader(is);
             reader.readLine();
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] waktu_salat = line.split(";");
+                Log.d(TAG,"INSERTING WAKTU SALAT "+waktu_salat[0]);
                 ContentValues values = new ContentValues();
                 values.put(waktu_salat_id, waktu_salat[0]);
                 values.put(waktu_salat_kota,waktu_salat[1]);
-//                String query = "SELECT "+kota_id+" FROM "+table_kota+" WHERE "+table_kota+"."+kota_nama+"=?";
-//                Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(waktu_salat[1])});
-//                if (cursor != null) cursor.moveToFirst();
-//
-//                values.put(waktu_salat_kota_id, cursor.getInt(cursor.getColumnIndex(kota_id)));
                 values.put(waktu_salat_tanggal, waktu_salat[2]);
                 values.put(waktu_salat_subuh, waktu_salat[3]);
                 values.put(waktu_salat_duhur, waktu_salat[4]);
@@ -189,6 +187,52 @@ public class Database extends SQLiteOpenHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        /*
+        try {
+            InputStreamReader is = new InputStreamReader(assetManager.open("prayer-time-magetan.csv"));
+
+            BufferedReader reader = new BufferedReader(is);
+            reader.readLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] waktu_salat = line.split(";");
+                ContentValues values = new ContentValues();
+                values.put(waktu_salat_id, waktu_salat[0]);
+                values.put(waktu_salat_kota,waktu_salat[1]);
+                values.put(waktu_salat_tanggal, waktu_salat[2]);
+                values.put(waktu_salat_subuh, waktu_salat[3]);
+                values.put(waktu_salat_duhur, waktu_salat[4]);
+                values.put(waktu_salat_ashar, waktu_salat[5]);
+                values.put(waktu_salat_magrib, waktu_salat[6]);
+                values.put(waktu_salat_isya, waktu_salat[7]);
+                db.insert(table_waktu_salat,null,values);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            InputStreamReader is = new InputStreamReader(assetManager.open("prayer-time-mojokerto.csv"));
+
+            BufferedReader reader = new BufferedReader(is);
+            reader.readLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] waktu_salat = line.split(";");
+                ContentValues values = new ContentValues();
+                values.put(waktu_salat_id, waktu_salat[0]);
+                values.put(waktu_salat_kota,waktu_salat[1]);
+                values.put(waktu_salat_tanggal, waktu_salat[2]);
+                values.put(waktu_salat_subuh, waktu_salat[3]);
+                values.put(waktu_salat_duhur, waktu_salat[4]);
+                values.put(waktu_salat_ashar, waktu_salat[5]);
+                values.put(waktu_salat_magrib, waktu_salat[6]);
+                values.put(waktu_salat_isya, waktu_salat[7]);
+                db.insert(table_waktu_salat,null,values);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
         Log.d(TAG,"INSERT ALL WAKTU SALAT SUCCESS");
     }
 
@@ -200,5 +244,35 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXIST "+table_kota);
         db.execSQL("DROP TABLE IF EXIST "+table_waktu_salat);
         this.onCreate(db);
+    }
+
+    public static boolean insertWaktuSalat(Context context, SQLiteDatabase db){
+        AssetManager assetManager = context.getAssets();
+
+        //INSERT WAKTU SALAT
+//        try {
+//            InputStreamReader is = new InputStreamReader(assetManager.open("prayer-time-surabaya.csv"));
+//
+//            BufferedReader reader = new BufferedReader(is);
+//            reader.readLine();
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                String[] waktu_salat = line.split(";");
+//                ContentValues values = new ContentValues();
+//                values.put(waktu_salat_id, waktu_salat[0]);
+//                values.put(waktu_salat_kota,waktu_salat[1]);
+//                values.put(waktu_salat_tanggal, waktu_salat[2]);
+//                values.put(waktu_salat_subuh, waktu_salat[3]);
+//                values.put(waktu_salat_duhur, waktu_salat[4]);
+//                values.put(waktu_salat_ashar, waktu_salat[5]);
+//                values.put(waktu_salat_magrib, waktu_salat[6]);
+//                values.put(waktu_salat_isya, waktu_salat[7]);
+//                db.insert(table_waktu_salat,null,values);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Log.d(TAG,"INSERT ALL WAKTU SALAT SUCCESS");
+        return true;
     }
 }

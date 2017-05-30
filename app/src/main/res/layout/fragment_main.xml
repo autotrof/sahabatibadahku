@@ -26,4 +26,9 @@
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
 
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/buttonIgniter"/>
+
 </LinearLayout>

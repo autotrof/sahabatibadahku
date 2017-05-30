@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:padding="24dp">
-        <ImageView
+        <ImageView android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:src="@drawable/logo_polos" />
@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/cardview_light_background"
             android:text="Sahabat Ibadahku"/>
+        <!--
         <TextView android:id="@+id/text_status"
             android:layout_marginTop="8dp"
             android:textSize="14dp"
@@ -35,6 +36,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
             android:text="Mempersiapkan Aplikasi"/>
+        -->
     </LinearLayout>
 
 

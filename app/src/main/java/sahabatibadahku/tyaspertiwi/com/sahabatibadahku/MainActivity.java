@@ -1,5 +1,9 @@
 package sahabatibadahku.tyaspertiwi.com.sahabatibadahku;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -7,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import java.util.List;
 
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.fragments.MainFragment;
@@ -24,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        JodaTimeAndroid.init(this);
 
         coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinatorLayout);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -38,5 +46,15 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
         viewState = 1;
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }

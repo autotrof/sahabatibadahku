@@ -20,6 +20,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.dao.DaoAmalan;
+import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.dialogs.DialogInputAmalan;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.models.Amalan;
 
 /**

@@ -1,7 +1,9 @@
 package sahabatibadahku.tyaspertiwi.com.sahabatibadahku.fragments;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -16,12 +18,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.AmalanAdapter;
-import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.DialogInputAmalan;
+import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.Database;
+import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.dialogs.DialogInputAmalan;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.R;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.dao.DaoAmalan;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.models.Amalan;
@@ -35,8 +39,10 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
     private View view;
     private RecyclerView recycler_view_amalan;
     private TextView placeholder_recycler_view_amalan;
+    private Button buttonIgniter;
     private DaoAmalan daoAmalan;
     FragmentManager fragmentManager;
+    ProgressDialog dialog;
 
     public MainFragment() {
     }
@@ -49,6 +55,8 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
             ViewGroup parent = (ViewGroup) view.getParent();
             parent.removeView(view);
         }
+        buttonIgniter = (Button)view.findViewById(R.id.buttonIgniter);
+        buttonIgniter.setOnClickListener(this);
         placeholder_recycler_view_amalan = (TextView)view.findViewById(R.id.placeholder_recycler_view_amalan);
         recycler_view_amalan = (RecyclerView)view.findViewById(R.id.recycler_view_amalan);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -63,6 +71,12 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
         daoAmalan = new DaoAmalan(getActivity());
         loadAllAmalan();
         fragmentManager = getActivity().getSupportFragmentManager();
+//        new Handler().postDelayed(new Runnable(){
+//            @Override
+//            public void run() {
+//                buttonIgniter.callOnClick();
+//            }
+//        }, 1000);
     }
 
     @Override
@@ -80,6 +94,9 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment,new JadwalAdzanFragment());
                 fragmentTransaction.commit();
+                break;
+            case R.id.menu_rekap:
+
                 break;
         }
         return true;
@@ -126,6 +143,36 @@ public class MainFragment extends Fragment implements Dialog.OnCancelListener, D
             case R.id.placeholder_recycler_view_amalan:
                 showDialogInputAmalan();
                 break;
+            case R.id.buttonIgniter:
+//                new DatabaseInitialize().execute();
+                break;
+        }
+    }
+
+    private class DatabaseInitialize extends AsyncTask {
+
+        public DatabaseInitialize() {
+            dialog = new ProgressDialog(getActivity());
+        }
+
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            Database.insertWaktuSalat(getActivity(),new Database(getActivity()).getWritableDatabase());
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage("Mempersiapkan aplikasi, tunggu seberntar.");
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
         }
     }
 }
