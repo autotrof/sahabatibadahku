@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background">
 
-    <Button android:text="Mutiara Hadist"
-        android:textSize="10dp"
-        android:textColor="@color/cardview_light_background"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:background="@color/colorPrimaryLight"
-        android:onClick="showSnackbar"/>
-
     <TextView android:id="@+id/placeholder_recycler_view_amalan"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

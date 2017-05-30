@@ -9,9 +9,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,10 +39,12 @@ public class DialogSetKota extends Dialog implements View.OnClickListener{
     AutoCompleteTextView input_kota;
     List<Kota> listKota;
     Button btnSimpan,btnBatal;
+    View viewParent;
 
-    public DialogSetKota(Context context) {
+    public DialogSetKota(Context context,View view) {
         super(context);
         this.context = context;
+        this.viewParent = view;
         daoKota = new DaoKota(context);
         daoJadwalAdzan = new DaoJadwalAdzan(context);
         sharedPreferences = context.getSharedPreferences("TYASPERTIWIPREFERENCE", Context.MODE_PRIVATE);
@@ -76,6 +81,22 @@ public class DialogSetKota extends Dialog implements View.OnClickListener{
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("kota",kota);
                     editor.commit();
+                    TextView placeholder_list_view_jadwal_adzan = (TextView)viewParent.findViewById(R.id.placeholder_list_view_jadwal_adzan);
+                    placeholder_list_view_jadwal_adzan.setVisibility(View.GONE);
+                    TextView text_kota = (TextView)viewParent.findViewById(R.id.text_kota);
+                    text_kota.setText(kota);
+                    ListView listJadwalAdzan = (ListView)viewParent.findViewById(R.id.list_view_jadwal_adzan);
+                    listJadwalAdzan.setVisibility(View.VISIBLE);
+                    JadwalAdzan jadwalAdzan = daoJadwalAdzan.getJadwalAdzanByKota(kota);
+                    List<String> stringListJadwalAdzan = new ArrayList<>();
+                    stringListJadwalAdzan.add("Subuh : "+jadwalAdzan.getSubuh());
+                    stringListJadwalAdzan.add("Duhur : "+jadwalAdzan.getDuhur());
+                    stringListJadwalAdzan.add("Ashar : "+jadwalAdzan.getAshar());
+                    stringListJadwalAdzan.add("Magrib : "+jadwalAdzan.getMagrib());
+                    stringListJadwalAdzan.add("Isya' : "+jadwalAdzan.getIsya());
+                    ArrayAdapter adapter = new ArrayAdapter(context,android.R.layout.simple_list_item_1,stringListJadwalAdzan);
+                    listJadwalAdzan.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
                 dismiss();
                 break;

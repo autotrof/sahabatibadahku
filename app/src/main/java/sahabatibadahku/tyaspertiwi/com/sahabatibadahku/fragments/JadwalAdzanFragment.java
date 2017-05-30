@@ -85,7 +85,7 @@ public class JadwalAdzanFragment extends Fragment implements DialogInterface.OnD
         text_kota = (TextView)view.findViewById(R.id.text_kota);
 
         DateTime dateTime = new DateTime().withChronology(IslamicChronology.getInstance());
-        dateTime.minusDays(1);
+        dateTime = dateTime.minusDays(1);
         DateFormat dateInstance = SimpleDateFormat.getDateInstance();
         String bulan = "";
         switch (dateTime.getMonthOfYear()){
@@ -151,7 +151,6 @@ public class JadwalAdzanFragment extends Fragment implements DialogInterface.OnD
             listView.setVisibility(View.GONE);
         }
         fragmentManager = getActivity().getSupportFragmentManager();
-//        loadAllKota();
     }
 
     @Override
@@ -177,11 +176,11 @@ public class JadwalAdzanFragment extends Fragment implements DialogInterface.OnD
     private void loadAllJadwalAdzan(String kota){
         JadwalAdzan jadwalAdzan = daoJadwalAdzan.getJadwalAdzanByKota(kota);
         List<String> stringListJadwalAdzan = new ArrayList<>();
-        stringListJadwalAdzan.add(jadwalAdzan.getSubuh());
-        stringListJadwalAdzan.add(jadwalAdzan.getDuhur());
-        stringListJadwalAdzan.add(jadwalAdzan.getAshar());
-        stringListJadwalAdzan.add(jadwalAdzan.getMagrib());
-        stringListJadwalAdzan.add(jadwalAdzan.getIsya());
+        stringListJadwalAdzan.add("Subuh : "+jadwalAdzan.getSubuh());
+        stringListJadwalAdzan.add("Duhur : "+jadwalAdzan.getDuhur());
+        stringListJadwalAdzan.add("Ashar : "+jadwalAdzan.getAshar());
+        stringListJadwalAdzan.add("Magrib : "+jadwalAdzan.getMagrib());
+        stringListJadwalAdzan.add("Isya' : "+jadwalAdzan.getIsya());
         listView = (ListView)view.findViewById(R.id.list_view_jadwal_adzan);
         ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,stringListJadwalAdzan);
         listView.setAdapter(adapter);
@@ -212,7 +211,7 @@ public class JadwalAdzanFragment extends Fragment implements DialogInterface.OnD
     }
 
     private void showDialogSetKota(){
-        DialogSetKota dialogSetKota = new DialogSetKota(getActivity());
+        DialogSetKota dialogSetKota = new DialogSetKota(getActivity(),view);
         dialogSetKota.setTitle("Setting Kota");
         dialogSetKota.show();
         dialogSetKota.getWindow().setLayout(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT);
