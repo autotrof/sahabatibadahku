@@ -12,13 +12,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.AutoCompleteKotaTextViewTextChangeListener;
+import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.JadwalAdzanAdapter;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.R;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.dao.DaoJadwalAdzan;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.dao.DaoKota;
@@ -88,15 +83,14 @@ public class DialogSetKota extends Dialog implements View.OnClickListener{
                     ListView listJadwalAdzan = (ListView)viewParent.findViewById(R.id.list_view_jadwal_adzan);
                     listJadwalAdzan.setVisibility(View.VISIBLE);
                     JadwalAdzan jadwalAdzan = daoJadwalAdzan.getJadwalAdzanByKota(kota);
-                    List<String> stringListJadwalAdzan = new ArrayList<>();
-                    stringListJadwalAdzan.add("Subuh : "+jadwalAdzan.getSubuh());
-                    stringListJadwalAdzan.add("Duhur : "+jadwalAdzan.getDuhur());
-                    stringListJadwalAdzan.add("Ashar : "+jadwalAdzan.getAshar());
-                    stringListJadwalAdzan.add("Magrib : "+jadwalAdzan.getMagrib());
-                    stringListJadwalAdzan.add("Isya' : "+jadwalAdzan.getIsya());
-                    ArrayAdapter adapter = new ArrayAdapter(context,android.R.layout.simple_list_item_1,stringListJadwalAdzan);
-                    listJadwalAdzan.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    String[] stringListJadwalAdzan = new String[5];
+                    stringListJadwalAdzan[0] = (jadwalAdzan.getSubuh());
+                    stringListJadwalAdzan[1] = (jadwalAdzan.getDuhur());
+                    stringListJadwalAdzan[2] = (jadwalAdzan.getAshar());
+                    stringListJadwalAdzan[3] = (jadwalAdzan.getMagrib());
+                    stringListJadwalAdzan[4] = (jadwalAdzan.getIsya());
+                    JadwalAdzanAdapter jadwalAdzanAdapter = new JadwalAdzanAdapter(context,stringListJadwalAdzan);
+                    listJadwalAdzan.setAdapter(jadwalAdzanAdapter);
                 }
                 dismiss();
                 break;

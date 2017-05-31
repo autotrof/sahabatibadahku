@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.AmalanAdapter;
+import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.JadwalAdzanAdapter;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.R;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.dao.DaoAmalan;
 import sahabatibadahku.tyaspertiwi.com.sahabatibadahku.dao.DaoJadwalAdzan;
@@ -173,18 +174,21 @@ public class JadwalAdzanFragment extends Fragment implements DialogInterface.OnD
         return true;
     }
 
-    private void loadAllJadwalAdzan(String kota){
+        private void loadAllJadwalAdzan(String kota){
         JadwalAdzan jadwalAdzan = daoJadwalAdzan.getJadwalAdzanByKota(kota);
-        List<String> stringListJadwalAdzan = new ArrayList<>();
-        stringListJadwalAdzan.add("Subuh : "+jadwalAdzan.getSubuh());
-        stringListJadwalAdzan.add("Duhur : "+jadwalAdzan.getDuhur());
-        stringListJadwalAdzan.add("Ashar : "+jadwalAdzan.getAshar());
-        stringListJadwalAdzan.add("Magrib : "+jadwalAdzan.getMagrib());
-        stringListJadwalAdzan.add("Isya' : "+jadwalAdzan.getIsya());
+        String[] stringListJadwalAdzan = new String[5];
+        stringListJadwalAdzan[0] = (jadwalAdzan.getSubuh());
+        stringListJadwalAdzan[1] = (jadwalAdzan.getDuhur());
+        stringListJadwalAdzan[2] = (jadwalAdzan.getAshar());
+        stringListJadwalAdzan[3] = (jadwalAdzan.getMagrib());
+        stringListJadwalAdzan[4] = (jadwalAdzan.getIsya());
+
+        JadwalAdzanAdapter jadwalAdzanAdapter = new JadwalAdzanAdapter(getActivity(),stringListJadwalAdzan);
+
         listView = (ListView)view.findViewById(R.id.list_view_jadwal_adzan);
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,stringListJadwalAdzan);
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+//        ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,stringListJadwalAdzan);
+        listView.setAdapter(jadwalAdzanAdapter);
+
     }
 
     /*
